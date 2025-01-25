@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filter Job Posts</title>
+  <style>
+    /* Add your existing CSS here */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .form-container h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: #333;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      background-color: #fff;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      color: #ffffff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Filter Job Posts</h2>
+    <form id="jobForm">
+      <!-- Role Selection -->
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select id="role" name="role" required>
+          <option value="">Select a Role</option>
+          <option value="intern">Intern</option>
+          <option value="software-engineer">Software Engineer</option>
+          <option value="cyber-security">Cyber Security</option>
+          <option value="devops">DevOps</option>
+          <option value="cloud">Cloud</option>
+          <option value="web-developer">Web Developer</option>
+          <option value="full-stack-developer">Full Stack Developer</option>
+          <option value="frontend-developer">Frontend Developer</option>
+          <option value="ui-ux">UI/UX</option>
+          <option value="analyst">Analyst</option>
+        </select>
+      </div>
+
+      <!-- Email Input -->
+      <div class="form-group">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <!-- HR Data Input -->
+      <div class="form-group">
+        <label for="hr-email">HR's Data</label>
+        <textarea id="hr-email" name="HR-email" placeholder="Enter HR's data (e.g., email, name, roles)" rows="4" required></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+   document.getElementById('jobForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const role = document.getElementById('role').value;
+  const email = document.getElementById('email').value;
+  const hr_data = document.getElementById('hr-email').value;
+
+  console.log('Role:', role);
+  console.log('Email:', email);
+  console.log('HR Data:', hr_data);
+
+  const apiUrl = 'https://console-bff.stg.arohalabs.dev/v1/flows/flows/tinky-devops/email-generator';
+  const payload = {
+    'name': 'tinky',
+    'role': role,
+    'email': email,
+    'company': 'aroha',
+  };
+
+  try {
+    console.log('Sending request to:', apiUrl);
+    console.log('Payload:', JSON.stringify(payload));
+
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'MiraAuthorization': 'sb-662643fda34babc9a4864c051586526c',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('API Error:', errorData);
+      alert('Error: ' + (errorData.detail || 'Unknown error occurred'));
+    } else {
+      const data = await response.json();
+      console.log('API Response:', data);
+      alert('Form submitted successfully! Response: ' + JSON.stringify(data));
+    }
+  } catch (error) {
+    console.error('Network error:', error);
+    alert('Network Error: Failed to fetch. Please check your internet connection or try again later.');
+  }
+});
+
+  </script>
+</body>
+</html>
