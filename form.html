@@ -122,40 +122,40 @@
   console.log('Email:', email);
   console.log('HR Data:', hr_data);
 
-  const apiUrl = 'https://console-bff.stg.arohalabs.dev/v1/flows/flows/tinky-devops/email-generator';
-  const payload = {
-    'name': 'tinky',
-    'role': role,
-    'email': email,
-    'company': 'aroha',
-  };
+  // const apiUrl = 'https://console-bff.stg.arohalabs.dev/v1/flows/flows/tinky-devops/email-generator';
+  // const payload = {
+  //   'name': 'tinky',
+  //   'role': role,
+  //   'email': email,
+  //   'company': 'aroha',
+  // };
 
-  try {
-    console.log('Sending request to:', apiUrl);
-    console.log('Payload:', JSON.stringify(payload));
+  // try {
+  //   console.log('Sending request to:', apiUrl);
+  //   console.log('Payload:', JSON.stringify(payload));
 
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'MiraAuthorization': 'sb-662643fda34babc9a4864c051586526c',
-      },
-      body: JSON.stringify(payload),
-    });
+  //   const response = await fetch(apiUrl, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'MiraAuthorization': 'sb-662643fda34babc9a4864c051586526c',
+  //     },
+  //     body: JSON.stringify(payload),
+  //   });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('API Error:', errorData);
-      alert('Error: ' + (errorData.detail || 'Unknown error occurred'));
-    } else {
-      const data = await response.json();
-      console.log('API Response:', data);
-      alert('Form submitted successfully! Response: ' + JSON.stringify(data));
-    }
-  } catch (error) {
-    console.error('Network error:', error);
-    alert('Network Error: Failed to fetch. Please check your internet connection or try again later.');
-  }
+  //   if (!response.ok) {
+  //     const errorData = await response.json();
+  //     console.error('API Error:', errorData);
+  //     alert('Error: ' + (errorData.detail || 'Unknown error occurred'));
+  //   } else {
+  //     const data = await response.json();
+  //     console.log('API Response:', data);
+  //     alert('Form submitted successfully! Response: ' + JSON.stringify(data));
+  //   }
+  // } catch (error) {
+  //   console.error('Network error:', error);
+  //   alert('Network Error: Failed to fetch. Please check your internet connection or try again later.');
+  // }
 });
 
   </script>
